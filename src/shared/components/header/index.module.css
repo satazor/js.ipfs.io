@@ -1,0 +1,9 @@
+:root {
+    --foo: 16px;
+}
+
+.header {
+    background: rebeccapurple;
+    margin-bottom: 1.45rem;
+    font-size: var(--foo);
+}
