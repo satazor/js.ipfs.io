@@ -1,5 +1,5 @@
 import React from 'react';
-import Link from '../shared/components/link';
+import Link from 'shared/components/link';
 
 const SecondPage = () => (
     <div>

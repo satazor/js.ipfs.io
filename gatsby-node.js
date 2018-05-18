@@ -7,13 +7,25 @@
  */
 
 const path = require('path');
+const fs = require('fs');
+const template = require('lodash/template');
 const { availableLocales, defaultLocale } = require('./intl/config');
 
 module.exports.modifyWebpackConfig = ({ config, program }) => {
+    // Add `shared` alias so that it's easier to access it from anywhere
+    config.merge({
+        resolve: {
+            alias: {
+                shared: path.join(__dirname, 'src/shared'),
+            },
+        },
+    });
+
+    // Setup Babel & PostCSS
     config.merge((current) => {
         current.postcss = require('postcss-preset-moxy')({
-            importPath: path.join(__dirname, 'shared/styles/imports'),
-            mixinsPath: path.join(__dirname, 'shared/styles/imports/mixins'),
+            importPath: path.join(__dirname, 'src/shared/styles/imports'),
+            mixinsPath: path.join(__dirname, 'src/shared/styles/mixins'),
             browsers: program.browserslist,
         }).plugins;
 
@@ -42,7 +54,20 @@ module.exports.modifyWebpackConfig = ({ config, program }) => {
     });
 };
 
+exports.createLayouts = () => {
+    // Create a layout for each locale, based on a template
+    const layoutTemplate = fs.readFileSync(path.join(__dirname, 'src/layouts/index.js'));
+
+    availableLocales.forEach((locale) => {
+        const localeLayout = template(layoutTemplate)({ locale })
+        .replace(/LayoutQuery/, `LayoutQuery_${locale}`);
+
+        fs.writeFileSync(path.join(__dirname, `src/layouts/index-${locale}.js`), localeLayout);
+    });
+};
+
 exports.onCreatePage = ({ page, boundActionCreators }) => {
+    // Create a localized page for each locale
     const { createPage, deletePage } = boundActionCreators;
 
     deletePage(page);
@@ -50,7 +75,7 @@ exports.onCreatePage = ({ page, boundActionCreators }) => {
     availableLocales.forEach((locale) => {
         createPage({
             ...page,
-            layout: locale,
+            layout: `index-${locale}`,
             path: locale === defaultLocale ? page.path : `/${locale}${page.path}`,
         });
     });

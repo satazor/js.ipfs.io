@@ -1,8 +1,6 @@
-# Project dependencies
-.cache
 node_modules
-yarn-error.log
-
-# Build directory
+npm-debug.log
+/.cache
 /public
-.DS_Store
+/coverage
+/src/layouts/index-*.js

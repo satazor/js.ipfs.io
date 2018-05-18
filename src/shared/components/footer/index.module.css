@@ -1,6 +1,6 @@
 @import "variables";
 
-.header {
+.footer {
     background: var(--color-grey);
     color: var(--color-white);
 }

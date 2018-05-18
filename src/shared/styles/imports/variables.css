@@ -1,5 +1,23 @@
-@import "custom-medias";
+/* ==========================================================================
+   Colors
+   ========================================================================== */
+
+/*
+   See: https://davidwalsh.name/sass-color-variables-dont-suck
+        http://chir.ag/projects/name-that-color
+*/
 
 :root {
     --color-white: #fff;
+    --color-black: #000;
+    --color-grey: #444;
+}
+
+/* ==========================================================================
+   Typography
+   ========================================================================== */
+
+:root {
+    --typography-display-font: "Helvetica", sans-serif;
+    --typography-text-font: "Helvetica", sans-serif;
 }

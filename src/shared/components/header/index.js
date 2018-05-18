@@ -1,13 +1,12 @@
 import React from 'react';
-import Link from 'gatsby-link';
 import { PropTypes } from 'prop-types';
+import classNames from 'classnames';
+import Link from 'shared/components/link';
 import styles from './index.module.css';
 
-console.log(styles);
-
-const Header = ({ siteTitle }) => (
-    <div
-        className={ styles.header }>
+const Header = ({ className }) => (
+    <header
+        className={ classNames(styles.header, className) }>
         <div
             style={ {
                 margin: '0 auto',
@@ -21,15 +20,15 @@ const Header = ({ siteTitle }) => (
                         color: 'white',
                         textDecoration: 'none',
                     } }>
-                    { siteTitle }
+                    JS IPFS
                 </Link>
             </h1>
         </div>
-    </div>
+    </header>
 );
 
 Header.propTypes = {
-    siteTitle: PropTypes.string.isRequired,
+    className: PropTypes.string,
 };
 
 export default Header;
